@@ -5,21 +5,20 @@ function signup() {
     const passwordInput = document.getElementById('signup-password').value;
     const signupMessage = document.getElementById('signup-message');
 
-    // Check for empty fields
+   
     if (!nameInput || !phoneInput || !emailInput || !passwordInput) {
         signupMessage.style.color = "red";
         signupMessage.textContent = "All fields are required.";
         return;
     }
 
-    // Check phone number format
     if (!/^\d{10}$/.test(phoneInput)) {
         signupMessage.style.color = "red";
         signupMessage.textContent = "Phone number must be 10 digits.";
         return;
     }
 
-    // Check email format (basic validation)
+    
     const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(emailInput)) {
         signupMessage.style.color = "red";
@@ -27,7 +26,7 @@ function signup() {
         return;
     }
 
-    // Check password strength
+   
     if (passwordInput.length < 6) {
         signupMessage.style.color = "red";
         signupMessage.textContent = "Password must be at least 6 characters long.";

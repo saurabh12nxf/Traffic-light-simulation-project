@@ -49,7 +49,9 @@
 
   
     <div id="message" class="message-box" style="display: none;"></div>
-
+    <p id="messageText"></p>
+    <img id="messageImage" src="" alt="Message Image" style="display: none; max-width: 100px;" />
+  </div>
     <style>
       * {
         margin: 0;
@@ -208,11 +210,21 @@
         var messageBox = $("#message");
 
        // JSON object
-        var messages = {
-          red: "Stop! Wait for the signal to turn green.",
-          yellow: "Caution! The signal is about to change.",
-          green: "Go! You may proceed now."
-        };
+       var messages = {
+    red: {
+        text: "Stop! Wait for green.",
+        image: "https://static.vecteezy.com/system/resources/thumbnails/012/042/299/small/stop-sign-icon-transparent-background-png.png"
+    },
+    yellow: {
+        text: "Caution! Signal changing.",
+        image: "https://img.freepik.com/premium-vector/warning-signs-high-voltage-hazard-isolated-white-background_68708-427.jpg"
+    },
+    green: {
+        text: "Go! You may proceed now.",
+        image: "https://c1.wallpaperflare.com/preview/210/379/741/go-sign-symbol-icon-sign.jpg"
+    }
+};
+
 
         var green = "#00ff00";
         var orange = " #ffc400";
@@ -272,15 +284,14 @@
         }
 
        // JSON message to show on frontend
-        function showMessage(lightColor) {
-          messageBox.style.display = "block";
-          messageBox.innerHTML = messages[lightColor];
-
-          setTimeout(function () {
-            messageBox.style.display = "none";
-          }, 2000);
-        }
-
+       function showMessage(lightColor) 
+       { messageBox.style.display = "block"; 
+       var messageText = document.getElementById("messageText");
+       var messageImage = document.getElementById("messageImage");
+       messageText.innerHTML = messages[lightColor].text;
+        messageImage.src = messages[lightColor].image; 
+        messageImage.style.display = "block"; 
+        setTimeout(function () { messageBox.style.display = "none"; }, 2000); }
        
         function changeLight() {
           if (currentLight === "green") {
