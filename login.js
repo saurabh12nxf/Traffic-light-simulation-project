@@ -21,6 +21,7 @@ function login() {
     const user = users.find(user => user.email === emailInput && user.password === passwordInput);
 
     if (user) {
+        sessionStorage.setItem('loggedInUser', JSON.stringify(user));
         loginMessage.style.color = "green";
         loginMessage.textContent = "Login successful! Redirecting...";
 
@@ -31,4 +32,9 @@ function login() {
         loginMessage.style.color = "red";
         loginMessage.textContent = "Invalid email or password. Please try again.";
     }
+}
+function logout() {
+    sessionStorage.removeItem('loggedInUser'); // Clear session storage
+    alert("You have been logged out.");
+    window.location.href = "login.html"; // Redirect to the login page
 }

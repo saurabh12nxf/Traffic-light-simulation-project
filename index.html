@@ -51,6 +51,8 @@
     <div id="message" class="message-box" style="display: none;"></div>
     <p id="messageText"></p>
     <img id="messageImage" src="" alt="Message Image" style="display: none; max-width: 100px;" />
+    <div id="welcome-message"></div>
+
   </div>
     <style>
       * {
@@ -189,7 +191,17 @@
     </style>
 
     <script>
-      window.onload = function () {
+     
+        window.onload = function () {
+    const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
+    if (! loggedInUser) {
+      window.location.href = "login.html";
+      return;
+    } else {
+      document.getElementById('welcome-message').textContent = `Welcome, ${loggedInUser.name}!`;
+      initTrafficLight();   
+};
+      function initTrafficLight(){       };
         var $ = function (e) {
           return document.querySelector(e);
         };
@@ -243,7 +255,7 @@
         var timeCount;
         var timerInterval;
         var currentLight = "green";
-
+       
        
         function updateLight() {
           if (gOn.getOn()) {
@@ -349,7 +361,8 @@
         this.getOn = function () {
           return this.on;
         };
-      };
+      }
+    
     </script>
   </body>
 </html>
