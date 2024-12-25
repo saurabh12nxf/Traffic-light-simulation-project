@@ -302,15 +302,35 @@
           }, 1000);
         }
 
-       // JSON message to show on frontend
-       function showMessage(lightColor) 
-       { messageBox.style.display = "block"; 
-       var messageText = document.getElementById("messageText");
-       var messageImage = document.getElementById("messageImage");
-       messageText.innerHTML = messages[lightColor].text;
-        messageImage.src = messages[lightColor].image; 
-        messageImage.style.display = "block"; 
-        setTimeout(function () { messageBox.style.display = "none"; }, 2000); }
+       
+       function showMessage(lightColor) {
+  const messageText = document.getElementById("messageText");
+  const messageImage = document.getElementById("messageImage");
+  const messageBox = document.getElementById("message");
+
+  
+  if (messages[lightColor]) {
+   
+    messageText.innerHTML = messages[lightColor].text || ""; 
+    if (messages[lightColor].image) {
+      messageImage.src = messages[lightColor].image;
+      messageImage.style.display = "block";
+    } else {
+      messageImage.style.display = "none";
+    }
+
+  
+    messageBox.style.display = "none";
+
+   
+  
+  }else {
+    
+    messageBox.style.display = "none";
+  }
+}
+
+
        
         function changeLight() {
           if (currentLight === "green") {
