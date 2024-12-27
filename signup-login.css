@@ -41,15 +41,15 @@ body {
 }
 
 .form-container input {
-    width: calc(100% - 30px); /* Adjusted for proper alignment */
+    width: calc(100% - 30px); 
     padding: 15px;
-    margin: 12px auto; /* Center the input elements */
+    margin: 12px auto; 
     border: 1px solid #ddd;
     border-radius: 10px;
     font-size: 16px;
     background-color: #f1f8e9;
     transition: all 0.3s ease-in-out;
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    box-sizing: border-box; 
 }
 
 .form-container input:focus {

@@ -34,7 +34,7 @@ function login() {
     }
 }
 function logout() {
-    sessionStorage.removeItem('loggedInUser'); // Clear session storage
+    sessionStorage.removeItem('loggedInUser'); 
     alert("You have been logged out.");
-    window.location.href = "login.html"; // Redirect to the login page
+    window.location.href = "index.html"; 
 }

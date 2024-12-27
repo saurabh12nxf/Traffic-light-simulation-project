@@ -227,7 +227,7 @@
         initTrafficLight();
     }
 
-    // Add event listener for logout button
+    
     document.getElementById('logout-btn').addEventListener('click', function () {
         sessionStorage.removeItem('loggedInUser');
         window.location.href = "login.html";
@@ -254,7 +254,7 @@ function initTrafficLight() {
     var timerNum = $("#timer-num");
     var messageBox = $("#message");
 
-    // JSON object
+    
     var messages = {
         red: {
             text: "Stop! Wait for green.",
