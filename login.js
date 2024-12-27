@@ -26,7 +26,7 @@ function login() {
         loginMessage.textContent = "Login successful! Redirecting...";
 
         setTimeout(() => {
-            window.location.href = "index.html"; 
+            window.location.href = "homepage.html"; 
         }, 2000);
     } else {
         loginMessage.style.color = "red";
