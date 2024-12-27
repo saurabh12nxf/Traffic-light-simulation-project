@@ -26,7 +26,8 @@
     <div class="display">
       <div class="human">
         
-          <h1 id="man">Traffic Light Simulation</h1>      
+          <h1 id="man">Traffic Light Simulation</h1>  
+          <button id="logout-btn">Logout</button>    
         <svg height="80" width="80">
           <g id="human">
             <circle id="human-head" r="10" cx="30" cy="30"></circle>
@@ -202,202 +203,204 @@
       height: 0.5vh;
       color: green; 
 }
+#logout-btn { position: absolute;
+   top: 5%; 
+   right: 10px; 
+   background-color: #ff0000; 
+   color: white;
+    border: none; 
+    padding: 10px;
+     cursor: pointer; 
+     border-radius: 5px; 
+    }
 
     </style>
 
     <script>
-     
-        window.onload = function () {
+     window.onload = function () {
     const loggedInUser = JSON.parse(sessionStorage.getItem('loggedInUser'));
-    if (! loggedInUser) {
-      window.location.href = "login.html";
-      return;
+    if (!loggedInUser) {
+        window.location.href = "login.html";
+        return;
     } else {
-      document.getElementById('welcome-message').textContent = `Welcome, ${loggedInUser.name}!`;
-      initTrafficLight();   
-};
-      function initTrafficLight(){       };
-        var $ = function (e) {
-          return document.querySelector(e);
-        };
-
-        var setSubColor = function (c) {
-          $("#human-head").style.fill = c;
-          $("#human-body").style.stroke = c;
-        };
-
-        var setColor = function (e, c) {
-          e.style.backgroundColor = c;
-        };
-
-        var redLamp = $("#red");
-        var oraLamp = $("#orange");
-        var greLamp = $("#green");
-        var timerNum = $("#timer-num");
-        var messageBox = $("#message");
-
-       // JSON object
-       var messages = {
-    red: {
-        text: "Stop! Wait for green.",
-        image: "https://static.vecteezy.com/system/resources/thumbnails/012/042/299/small/stop-sign-icon-transparent-background-png.png"
-    },
-    yellow: {
-        text: "Caution! Signal changing.",
-        image: "https://img.freepik.com/premium-vector/warning-signs-high-voltage-hazard-isolated-white-background_68708-427.jpg"
-    },
-    green: {
-        text: "Go! You may proceed now.",
-        image: "https://c1.wallpaperflare.com/preview/210/379/741/go-sign-symbol-icon-sign.jpg"
+        document.getElementById('welcome-message').textContent = `Welcome, ${loggedInUser.name}!`;
+        initTrafficLight();
     }
+
+    // Add event listener for logout button
+    document.getElementById('logout-btn').addEventListener('click', function () {
+        sessionStorage.removeItem('loggedInUser');
+        window.location.href = "login.html";
+    });
 };
 
+function initTrafficLight() {
+    var $ = function (e) {
+        return document.querySelector(e);
+    };
 
-        var green = "#00ff00";
-        var orange = " #ffc400";
-        var red = "#ff0000";
-        var gDim = "#0c350c";
-        var oDim = "#36361a";
-        var rDim = "#330f0f";
+    var setSubColor = function (c) {
+        $("#human-head").style.fill = c;
+        $("#human-body").style.stroke = c;
+    };
 
-        var gOn = new isOn();
-        var oOn = new isOn();
-        var rOn = new isOn();
+    var setColor = function (e, c) {
+        e.style.backgroundColor = c;
+    };
 
-        var greenTimer = 10;
-        var orangeTimer = 3;
-        var redTimer = 10;
-        var timeCount;
-        var timerInterval;
-        var currentLight = "green";
-       
-       
-        function updateLight() {
-          if (gOn.getOn()) {
+    var redLamp = $("#red");
+    var oraLamp = $("#orange");
+    var greLamp = $("#green");
+    var timerNum = $("#timer-num");
+    var messageBox = $("#message");
+
+    // JSON object
+    var messages = {
+        red: {
+            text: "Stop! Wait for green.",
+            image: "https://static.vecteezy.com/system/resources/thumbnails/012/042/299/small/stop-sign-icon-transparent-background-png.png"
+        },
+        yellow: {
+            text: "Caution! Signal changing.",
+            image: "https://img.freepik.com/premium-vector/warning-signs-high-voltage-hazard-isolated-white-background_68708-427.jpg"
+        },
+        green: {
+            text: "Go! You may proceed now.",
+            image: "https://c1.wallpaperflare.com/preview/210/379/741/go-sign-symbol-icon-sign.jpg"
+        }
+    };
+
+    var green = "#00ff00";
+    var orange = "#ffc400";
+    var red = "#ff0000";
+    var gDim = "#0c350c";
+    var oDim = "#36361a";
+    var rDim = "#330f0f";
+
+    var gOn = new isOn();
+    var oOn = new isOn();
+    var rOn = new isOn();
+
+    var greenTimer = 10;
+    var orangeTimer = 3;
+    var redTimer = 10;
+    var timeCount;
+    var timerInterval;
+    var currentLight = "green";
+
+    function updateLight() {
+        if (gOn.getOn()) {
             timeCount = greenTimer;
             setColor(oraLamp, oDim);
             setColor(redLamp, rDim);
             setColor(greLamp, green);
             setSubColor("green");
             showMessage("green");
-          } else if (oOn.getOn()) {
+        } else if (oOn.getOn()) {
             timeCount = orangeTimer;
             setColor(greLamp, gDim);
             setColor(redLamp, rDim);
             setColor(oraLamp, orange);
             setSubColor("yellow");
             showMessage("yellow");
-          } else if (rOn.getOn()) {
+        } else if (rOn.getOn()) {
             timeCount = redTimer;
             setColor(oraLamp, oDim);
             setColor(greLamp, gDim);
             setColor(redLamp, red);
             setSubColor("red");
             showMessage("red");
-          }
-
-          timerNum.innerHTML = timeCount;
-          clearInterval(timerInterval);
-          timerInterval = setInterval(function () {
-            if (timeCount > 0) {
-              timeCount--;
-              timerNum.innerHTML = timeCount;
-            } else {
-              clearInterval(timerInterval);
-              
-              changeLight();
-            }
-          }, 1000);
         }
 
-       
-       function showMessage(lightColor) {
-  const messageText = document.getElementById("messageText");
-  const messageImage = document.getElementById("messageImage");
-  const messageBox = document.getElementById("message");
-
-  
-  if (messages[lightColor]) {
-   
-    messageText.innerHTML = messages[lightColor].text || ""; 
-    if (messages[lightColor].image) {
-      messageImage.src = messages[lightColor].image;
-      messageImage.style.display = "block";
-    } else {
-      messageImage.style.display = "none";
+        timerNum.innerHTML = timeCount;
+        clearInterval(timerInterval);
+        timerInterval = setInterval(function () {
+            if (timeCount > 0) {
+                timeCount--;
+                timerNum.innerHTML = timeCount;
+            } else {
+                clearInterval(timerInterval);
+                changeLight();
+            }
+        }, 1000);
     }
 
-  
-    messageBox.style.display = "none";
+    function showMessage(lightColor) {
+        const messageText = document.getElementById("messageText");
+        const messageImage = document.getElementById("messageImage");
+        const messageBox = document.getElementById("message");
 
-   
-  
-  }else {
-    
-    messageBox.style.display = "none";
-  }
-}
+        if (messages[lightColor]) {
+            messageText.innerHTML = messages[lightColor].text || "";
+            if (messages[lightColor].image) {
+                messageImage.src = messages[lightColor].image;
+                messageImage.style.display = "block";
+            } else {
+                messageImage.style.display = "none";
+            }
+            messageBox.style.display = "block"; // Show the message box
+        } else {
+            messageBox.style.display = "none";
+        }
+    }
 
-
-       
-        function changeLight() {
-          if (currentLight === "green") {
+    function changeLight() {
+        if (currentLight === "green") {
             gOn.setOn(false);
             oOn.setOn(true);
             currentLight = "yellow";
-          } else if (currentLight === "yellow") {
+        } else if (currentLight === "yellow") {
             oOn.setOn(false);
             rOn.setOn(true);
             currentLight = "red";
-          } else if (currentLight === "red") {
+        } else if (currentLight === "red") {
             rOn.setOn(false);
             gOn.setOn(true);
             currentLight = "green";
-          }
-          updateLight();
         }
+        updateLight();
+    }
 
-        
-        $("#red-btn").onclick = function () {
-          gOn.setOn(false);
-          oOn.setOn(false);
-          rOn.setOn(true);
-          currentLight = "red";
-          updateLight();
-        };
+    $("#red-btn").onclick = function () {
+        gOn.setOn(false);
+        oOn.setOn(false);
+        rOn.setOn(true);
+        currentLight = "red";
+        updateLight();
+    };
 
-        $("#orange-btn").onclick = function () {
-          gOn.setOn(false);
-          oOn.setOn(true);
-          rOn.setOn(false);
-          currentLight = "yellow";
-          updateLight();
-        };
+    $("#orange-btn").onclick = function () {
+        gOn.setOn(false);
+        oOn.setOn(true);
+        rOn.setOn(false);
+        currentLight = "yellow";
+        updateLight();
+    };
 
-        $("#green-btn").onclick = function () {
-          gOn.setOn(true);
-          oOn.setOn(false);
-          rOn.setOn(false);
-          currentLight = "green";
-          updateLight();
-        };
-
-       
+    $("#green-btn").onclick = function () {
         gOn.setOn(true);
+        oOn.setOn(false);
+        rOn.setOn(false);
         currentLight = "green";
         updateLight();
-      };
+    };
 
-      var isOn = function () {
-        this.on = false;
-        this.setOn = function (b) {
-          this.on = b;
-        };
-        this.getOn = function () {
-          return this.on;
-        };
-      }
-    
+    gOn.setOn(true);
+    currentLight = "green";
+    updateLight();
+}
+
+var isOn = function () {
+    this.on = false;
+    this.setOn = function (b) {
+        this.on = b;
+    };
+    this.getOn = function () {
+        return this.on;
+    };
+};
+
+
     </script>
   </body>
 </html>
