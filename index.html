@@ -325,24 +325,19 @@ function initTrafficLight() {
         }, 1000);
     }
 
-    function showMessage(lightColor) {
-        const messageText = document.getElementById("messageText");
-        const messageImage = document.getElementById("messageImage");
-        const messageBox = document.getElementById("message");
-
-        if (messages[lightColor]) {
-            messageText.innerHTML = messages[lightColor].text || "";
-            if (messages[lightColor].image) {
-                messageImage.src = messages[lightColor].image;
-                messageImage.style.display = "block";
-            } else {
-                messageImage.style.display = "none";
-            }
-            messageBox.style.display = "block"; // Show the message box
-        } else {
-            messageBox.style.display = "none";
-        }
-    }
+    function showMessage(lightColor) 
+    { const messageText = document.getElementById("messageText");
+     const messageImage = document.getElementById("messageImage");
+      const messageBox = document.getElementById("message"); 
+      if (messages[lightColor]) 
+      { messageText.innerHTML = messages[lightColor].text || ""; 
+      if (messages[lightColor].image)
+       { messageImage.src = messages[lightColor].image; 
+        messageImage.style.display = "block"; }
+         else { messageImage.style.display = "none"; }
+          messageBox.style.display = "none"; }else
+           { messageBox.style.display = "none"; }
+           }
 
     function changeLight() {
         if (currentLight === "green") {
